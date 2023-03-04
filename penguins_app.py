@@ -6,11 +6,15 @@ from sklearn.ensemble import RandomForestClassifier
 
 st.write("""
          # Penguin prediction app
-         This app predicts the Palmer Penguin species!
-         * Adeile, Chinstrap or Gentoo
+         This app predicts the Palmer Penguin species based on the input variables! On the side menu to the left,
+         you can see that there are two ways of inputting information.
+         * Import a CSV file with the variables
+         * Manually fill out parameters such as island, sex, body mass, flipper length etc.
          """)
+st.text(' ')
+st.text(' ')
 
-st.sidebar.header('User input')
+st.sidebar.header('User input:')
 st.sidebar.markdown("""
                     [Example CSV Input file](https://raw.githubusercontent.com/dataprofessor/data/master/penguins_example.csv)
                     """)
@@ -22,6 +26,7 @@ if upload_file is not None:
     input_df = pd.read_csv(upload_file)
 else:
     def user_input_features():
+        st.write(' ')
         island = st.sidebar.selectbox('Island',('Biscoe', 'Dream', 'Torgersen'))
         sex = st.sidebar.selectbox('Sex',('male', 'female'))
         bill_length_mm = st.sidebar.slider('Bill length (mm)', 32.1, 59.6, 43.9)
@@ -62,7 +67,7 @@ st.subheader('User input features')
 if upload_file is not None:
     st.write(df)
 else:
-    st.write('Awaiting CSV file to be uploaded. Currently using example input parameters')
+    st.write('This table shows the input parameters. Try adjusting the input parameters on the left side.')
     st.write(df)
 
 
@@ -74,7 +79,8 @@ load_model = pickle.load(open('penguins_model.pkl', 'rb'))
 prediction = load_model.predict(df)
 predict_proba = load_model.predict_proba(df)
 
-
+st.text(' ')
+st.text(' ')
 st.subheader('Prediction of species')
 penguin_species = np.array(['Adeile', 'Chinstrap', 'Gentoo'])
 st.write(penguin_species[prediction][0])
